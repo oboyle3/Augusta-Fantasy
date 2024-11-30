@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$password = $_POST['password'];
 //todo santizize the input to prevent sql injestion
 //qery to check if user exists
-$sql = "SELECT password FROM users WHERE username = ?";
+$sql = "SELECT password  FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
 //bind paramters s indicates string type
 if($stmt){
@@ -36,6 +36,9 @@ echo "stored pass " .  $stored_password;
 if ($stored_password === $password){
 	echo "kkkkkk";
 	$_SESSION['username'] = $username;
+//
+	$_SESSION['age'] = $age;
+//
         $_SESSION['logged_in'] = true;
 	echo  "USERNAMEE" . $_SESSION['username'];
         header("Location: dashboard.php");

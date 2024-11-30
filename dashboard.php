@@ -1,16 +1,21 @@
 <?php
 //start session
 session_start();
-//echo  "USERNAMEE" . $_SESSION['username'];
-
-//check if user is logged in 
+//database connection settings
+$servername = "localhost";
+$username = "oboyle3";
+$db_password = "Larrybird33";
+$dbname = "user_info";
+//create connection
+$conn = new mysqli($servername, $username, $db_password, $dbname);
+//get the user id from the session
+//$user_id = $_SESSION['user_id'];
+//echo "user id" .  $user_id;
 if(!isset($_SESSION["logged_in"] )){
-	//redirect to loginpage if not logged in
-//	header("Location: login.php");
-	echo "i make";
-
+	echo "user is not logged in";
 }
-//echo "    welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+$age = $_SESSION['age'];
+echo $age;
 
 ?>
 
@@ -28,5 +33,7 @@ background-color: Cornsilk;
 <body>
 	<h1> welcome you are logged in </h1>
 	<p>hello , <?php echo ($_SESSION['username']) ?>!</p>
+	<p>our records show you your age is  , <?php echo ($_SESSION['age'])  ?>!</p>
+
 </body>
 </html>
