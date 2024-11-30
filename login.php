@@ -1,55 +1,58 @@
-<?php
+<?php  //login.php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors' , 1);ini_set('display_startup_errors' ,1);
 //database connection settings
-$servername = "localhost";
+$host = "localhost";
 $username = "oboyle3";
-$db_password = "Larrybird33";
+$password = "Larrybird33";
 $dbname = "user_info";
-//create connection
-$conn = new mysqli($servername, $username, $db_password, $dbname);
-//check connection
-if ($conn->connect_error){
-	die("connection failed" . $conn->connect_error);
-echo "connectio is dead";
+$chrs =  "utf8mb4"; //characters in utf8
+$attr = "mysql:host=$host=$host;dbname=$db;charset=$chrs";
 
+try 
+{
+	//create a new pdo instance (connect to db)
+	$conn  = new PDO("mysql:host=$host;dbname=$dbname",$username,$password);
+
+	//set pdo error mode to exception for better debugging
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
-//get form data
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$username = $_POST['username']; 
-	$password = $_POST['password'];
-//todo santizize the input to prevent sql injestion
-//qery to check if user exists
-$sql = "SELECT password  FROM users WHERE username = ?";
+catch (PDOException $e) {
+	echo "connection failed " . $e->getMessage();
+}
+
+
+$sql = SELECT username FROM users;
+
+//prep sql statment
 $stmt = $conn->prepare($sql);
-//bind paramters s indicates string type
-if($stmt){
-	$stmt->bind_param("s",$username);
-	$stmt->execute();
-	$stmt->bind_result($stored_password);
-}
+//bind the username param to poboyle
+$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+//set the username to poboyle
+$username = 'poboyle';
+//execute statement
+$stmt->execute();
+//fatch results
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//echo "rocky road to dublin \n";
-$stmt->fetch();
-echo "stored pass " .  $stored_password;
-if ($stored_password === $password){
-	echo "kkkkkk";
-	$_SESSION['username'] = $username;
-//
-	$_SESSION['age'] = $age;
-//
-        $_SESSION['logged_in'] = true;
-	echo  "USERNAMEE" . $_SESSION['username'];
-        header("Location: dashboard.php");
-	
-
-		
-}
-else{ 
-	echo "outside";
-}
-
-}
-$conn->close();
 ?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>helloworld</title>
+	 </head>
+<body>
+	<h1> users </h2>
+
+<?php
+//check if user exists
+if($user){
+echo"username : " . htmlspecialchars($user['username']) . " ,good? ";
+}//end if
+else {
+echo "user not found";
+}//end else
+?>
+</body>
+</html>
