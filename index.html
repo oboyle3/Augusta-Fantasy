@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pat's Website</title>
-	<link rel="stylesheet" href="style.css">
+	<style>
+		body{background-color: LightSalmon;}
+		h2{text-align: center;}
+		h5{text-align: center;}
+		button{text-align:center;}
+		a{align-items: center;};
+		footer{background-color: blue;}
+	</style>
+
 </head>
 <body>
-	<h2>login page</h2>
+   
+	<h2>welcome to baker street</h2>
+	<h5> please choose a option below</h5>
 
-	<form action="login.php" method="post">
-		<label for="username">Username:</label>
-		<input type="text" id="username" name="username" required><br><br>
-<label for="username">pass:</label>
-                <input type="text" id="password" name="password" required><br><br>
+	<a href=login.php>
+		<button class="btn btn-login">Login</button>
+	</a>
 
-	
-
-		<button type = "submit">Login</button>
-
+	<a href=register.php>
+		<button class "btn btn=register">Register</button>
+	</a>
 	
 
         <footer>
            <p> Standard Irishman 2024</p>
         </footer>
 
-        <script src = "script.js"></script>
+        
 
 
 </body>

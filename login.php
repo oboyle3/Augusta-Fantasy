@@ -8,7 +8,7 @@ $username = "oboyle3";
 $password = "Larrybird33";
 $dbname = "user_info";
 $chrs =  "utf8mb4"; //characters in utf8
-$attr = "mysql:host=$host=$host;dbname=$db;charset=$chrs";
+$attr = "mysql:host=$host=$host;dbname=$dbname;charset=$chrs";
 
 try 
 {
@@ -23,14 +23,16 @@ catch (PDOException $e) {
 }
 
 
-$sql = SELECT username FROM users;
+$sql = "SELECT * FROM users WHERE username =:username";
 
 //prep sql statment
 $stmt = $conn->prepare($sql);
-//bind the username param to poboyle
-$stmt->bindParam(':username', $username, PDO::PARAM_STR);
 //set the username to poboyle
 $username = 'poboyle';
+
+//bind the username param to poboyle
+$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
 //execute statement
 $stmt->execute();
 //fatch results
@@ -39,16 +41,23 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
 	<head>
 		<title>helloworld</title>
 	 </head>
 <body>
-	<h1> users </h2>
+	<h1> users </h1>
+	<h1> &#128516 </h1>
 
 <?php
 //check if user exists
 if($user){
-echo"username : " . htmlspecialchars($user['username']) . " ,good? ";
+echo"username : " . htmlspecialchars($user['username']) . "<br>";
+echo "hometown: " . htmlspecialchars($user['hometown']) . "<br>" ;
+echo "email: " . htmlspecialchars($user['email']) . "<br>";
+echo "first  name: " .htmlspecialchars($user['first_name']) . "<br>";
+echo "last  name: " .htmlspecialchars($user['last_name']) . "<br>";
+
 }//end if
 else {
 echo "user not found";
