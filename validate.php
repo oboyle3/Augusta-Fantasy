@@ -10,8 +10,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	//SANITIZE FOR SQL INGESTION
 	$username = $conn->real_escape_string($username);
 	$password = $conn->real_escape_string($password);
-echo "user:  " . $username;
-echo "pass:  " . $password;
+//echo "user:  " . $username;
+//echo "pass:  " . $password;
 
 	$sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 	$result =$conn->query($sql);
@@ -34,7 +34,18 @@ $conn->close();
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.3">
+
 	<title>Validate</title>
+	<style>
+		footer {
+		   text-align: center;
+	           padding: 20px;
+		   background-color: LightGray;
+		}
+		body{background-color: LightSalmon;}
+
+	</style>
 </head>
 <body>
 	<h2>Login Please</h2>
@@ -51,8 +62,12 @@ $conn->close();
                 <label for="password">Password:</label>
                 <input type = "text" name="password" id="password" required><br><br>
 
-	<input type="submit" value="Login please">
+	<input type="submit" value="Alright cool, lets login">
 
 	</form>
+	<footer>
+           <p> Standard Irishman 2024</p>
+        </footer>
+
 </body>
 <html>

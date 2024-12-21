@@ -42,6 +42,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.3">
+
 	<head>
 		<title>helloworld</title>
 	 </head>
