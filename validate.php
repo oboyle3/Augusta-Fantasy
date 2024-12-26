@@ -13,13 +13,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 //echo "user:  " . $username;
 //echo "pass:  " . $password;
 
-	$sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+	$sql = "SELECT id, username, password FROM users WHERE username = '$username'";
 	$result =$conn->query($sql);
 
-	if ($result->num_rows > 0) {
+	if ( $result && $result->num_rows > 0) {
+	//fetch the user data
+		$row = $result->fetch_assoc();
+		$user_id = $row['id'];
+		$db_password = $row['password'];
+		if($password === $db_password) {
 		$_SESSION['username'] = $username; //store info in session
-	header('Location: dashboard.php');
-	exit();
+                $_SESSION['id'] = $user_id;
+		header('Location: dashboard.php');
+		exit();
+		}//end if
+		
+	
 	}//end if
 	else {
 	$error_message = "invalid username or pass";
