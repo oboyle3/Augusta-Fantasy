@@ -60,8 +60,8 @@ header {
 <h5> User logged in: <?php echo htmlspecialchars($username); ?> </h5>
        
         <h1>---------------------------- </h1>
-	<h5>Select three golfers that you will track masters week:<h5>
-	<h7> Note: this is a one time selection pick wisely<h7><br></br>
+	<h5>Select five golfers that you will track masters week:<h5>
+	<h7> This years field:<h7><br></br>
 	<?php
 //loop through each golfer
 foreach ($golfers as $golfer) {

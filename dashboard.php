@@ -61,7 +61,7 @@ header {
 	background-color: #666;
 	padding: 30px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 21px;
 	color: white;
 }
  footer {
@@ -69,14 +69,19 @@ header {
                    padding: 20px;
                    background-color: LightGray;
                 }
+.logged-in {
+color: blue;
+display: flex;
+justify-content: space-between;
+}
 </style>
 </head>
 <body>
 	<header>
 	<h2>Baker Street Main Page</h2>
 	</header>
-	<h5> User logged in: <?php echo htmlspecialchars($username); ?> </h5>
-	<h5> your age:  <?php echo htmlspecialchars($age); ?> </h5>
+	<h5 class="logged-in"> User logged in: <?php echo htmlspecialchars($username); ?> </h5>
+	<h5  class="logged-in"> your age:  <?php echo htmlspecialchars($age); ?> </h5>
 	<h5> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
 	<h5> your email:  <?php echo htmlspecialchars($email); ?> </h5>
 	<h1>------------Your Selected Golfers---------------- </h1>
@@ -94,7 +99,7 @@ header {
 		<li> <a href="index.html">Logout</a></li>
 	   </ul>
 	<ul>
-		<li> <a href="golferselection.php">Select Golfers</a></li>
+		<li> <a href="golferselection.php">Select Golfers / Change Selections</a></li>
 	</ul>
 	</nav>
 	<footer>
