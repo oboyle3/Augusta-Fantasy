@@ -10,7 +10,23 @@ if(!isset($_SESSION["username"] )){
 else {
 echo "successful login";
 }
+var_dump($_SESSION);
+
+$user_id = $_SESSION['id'];
+$username = $_SESSION['username'];
 require_once('db_connection.php');
+//srart query for user selections
+//start query for user selections
+$golfer_query = "SELECT g1.name AS golfer_1_name, g2.name AS golfer_2_name, g3.name AS golfer_3_name, g4.name AS golfer_4_name, g5.name AS golfer_5_name FROM selections ugs LEFT JOIN golfers g1 ON ugs.golfer_1 = g1.golfer_id LEFT JOIN golfers g2 ON ugs.golfer_2 = g2.golfer_id LEFT JOIN golfers g3 ON ugs.golfer_3 = g3.golfer_id LEFT JOIN golfers g4 ON ugs.golfer_4 = g4.golfer_id LEFT JOIN golfers g5 ON ugs.golfer_5 = g5.golfer_id WHERE ugs.user_id = ?";
+$golfer_stmt =  $conn->prepare($golfer_query);
+$golfer_stmt-> bind_param('i',$user_id);
+$golfer_stmt->execute();
+$golfer_stmt->bind_result($golfer_1_name,$golfer_2_name,$golfer_3_name,$golfer_4_name,$golfer_5_name);
+$golfer_stmt->fetch();
+$golfer_stmt->close();
+
+
+//end query for user selections
 	//fetch golfers from the golfers table
 	$query = "SELECT golfer_id, name FROM golfers";
 	$result = $conn->query($query);
@@ -69,6 +85,12 @@ foreach ($golfers as $golfer) {
 	}//end for each
 	?>
 	<h1>---------------------------- </h1>
+	<h1>------------Your Selected Golfers---------------- </h1>
+<h5> 1 :   <?php echo htmlspecialchars($golfer_1_name); ?> </h5>
+<h5> 2 :   <?php echo htmlspecialchars($golfer_2_name); ?> </h5>
+<h5> 3 :   <?php echo htmlspecialchars($golfer_3_name); ?> </h5>
+<h5> 4 :   <?php echo htmlspecialchars($golfer_4_name); ?> </h5>
+<h5> 5 :   <?php echo htmlspecialchars($golfer_5_name); ?> </h5>
 	
         <nav>
            <ul>

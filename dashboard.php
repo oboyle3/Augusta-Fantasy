@@ -80,10 +80,10 @@ justify-content: space-between;
 	<header>
 	<h2>Baker Street Main Page</h2>
 	</header>
-	<h5 class="logged-in"> User logged in: <?php echo htmlspecialchars($username); ?> </h5>
-	<h5  class="logged-in"> your age:  <?php echo htmlspecialchars($age); ?> </h5>
-	<h5> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
-	<h5> your email:  <?php echo htmlspecialchars($email); ?> </h5>
+	<h5 style="font-size:10px; line-height:0.4;" > User logged in: <?php echo htmlspecialchars($username); ?> </h5>
+	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5>
+	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
+	<h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5>
 	<h1>------------Your Selected Golfers---------------- </h1>
 <h5> 1 :   <?php echo htmlspecialchars($golfer_1_name); ?> </h5>
 <h5> 2 :   <?php echo htmlspecialchars($golfer_2_name); ?> </h5>
@@ -101,6 +101,10 @@ justify-content: space-between;
 	<ul>
 		<li> <a href="golferselection.php">Select Golfers / Change Selections</a></li>
 	</ul>
+	<ul>
+                <li> <a href="update_info.php">User profile settings</a></li>
+        </ul>
+
 	</nav>
 	<footer>
            <p> Standard Irishman 2024</p>
