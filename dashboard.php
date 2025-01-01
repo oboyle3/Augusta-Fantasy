@@ -69,10 +69,22 @@ header {
                    padding: 20px;
                    background-color: LightGray;
                 }
-.logged-in {
-color: blue;
-display: flex;
-justify-content: space-between;
+table {
+margin:20px 0;
+border-collapse: collapse;
+font-family: Arial, sans-serif;
+}
+th {
+background-color: #4CAF50;
+color: white;
+padding: 1px;
+}
+td {
+border: 1px solid #ddd;
+text-align: center;
+}
+tr:hover {
+background-color: #f2f2f2;
 }
 </style>
 </head>
@@ -85,15 +97,36 @@ justify-content: space-between;
 	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5>
 	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
 	<h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5>
-	<h1>------------Your Selected Golfers---------------- </h1>
-<h5> 1 :   <?php echo htmlspecialchars($golfer_1_name); ?> </h5>
-<h5> 2 :   <?php echo htmlspecialchars($golfer_2_name); ?> </h5>
-<h5> 3 :   <?php echo htmlspecialchars($golfer_3_name); ?> </h5>
-<h5> 4 :   <?php echo htmlspecialchars($golfer_4_name); ?> </h5>
-<h5> 5 :   <?php echo htmlspecialchars($golfer_5_name); ?> </h5>
+<table style ="width:50%">
+	<tr>
+	   <th>your selected golfer</th>
+           <th>names</th>
+	</tr>
+	<tr>
+           <td> 1</td>
+	   <td><?php echo htmlspecialchars($golfer_1_name); ?> </td>
+	</tr>
+	<tr>
+           <td> 2</td>
+           <td><?php echo htmlspecialchars($golfer_2_name); ?> </td>
+        </tr>
+	<tr>
+           <td>3 </td>
+           <td><?php echo htmlspecialchars($golfer_3_name); ?> </td>
+        </tr>
+	<tr>
+           <td>4 </td>
+           <td><?php echo htmlspecialchars($golfer_4_name); ?> </td>
+        </tr>
+	<tr>
+           <td>5 </td>
+           <td><?php echo htmlspecialchars($golfer_5_name); ?> </td>
+        </tr>
 
-<h1>---------------------------- </h1>
-<img src="/images/sjulogo.png" alt="my image" width="200" height="200">
+
+
+</table>
+
 
 	<nav>
 	   <ul>
@@ -105,6 +138,21 @@ justify-content: space-between;
 	<ul>
                 <li> <a href="update_info.php">User profile settings</a></li>
         </ul>
+
+</table>
+
+<ul>
+                <li> <a href="change_test.php">change test</a></li>
+        </ul>
+
+
+        </nav>
+        <footer>
+           <p> Standard Irishman 2024</p>
+        </footer>
+
+</body>
+</html>
 
 	</nav>
 	<footer>

@@ -55,9 +55,9 @@ background-color: Cornsilk;
 }
 header {
         background-color: #666;
-        padding: 30px;
+        padding: 10px;
         text-align: center;
-        font-size: 20px;
+        font-size: 21px;
         color: white;
 }
  footer {
@@ -70,11 +70,9 @@ header {
 </head>
 <body>
 <header>
-        <h2>Baker Street Golfer Selection</h2>
-        </header>
-       
-<h5> User logged in: <?php echo htmlspecialchars($username); ?> </h5>
-       
+        <h2> <img src="/images/sjulogo.png" alt="my image" width="170" height="170">  Baker Street Golfer Selection</h2>
+</header>
+<h5 style="font-size:10px; line-height:0.4;" > User logged in: <?php echo htmlspecialchars($username); ?> </h5>       
         <h1>---------------------------- </h1>
 	<h5>Select five golfers that you will track masters week:<h5>
 	<h7> This years field:<h7><br></br>
@@ -84,6 +82,8 @@ foreach ($golfers as $golfer) {
 	echo "name:  " . htmlspecialchars($golfer["name"]). "<br>"; 
 	}//end for each
 	?>
+	<a href="https://www.masters.com/en_US/players/player_list.html" target="_blank"> Complete list here</a>
+
 	<h1>---------------------------- </h1>
 	<h1>------------Your Selected Golfers---------------- </h1>
 <h5> 1 :   <?php echo htmlspecialchars($golfer_1_name); ?> </h5>
