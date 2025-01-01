@@ -59,7 +59,7 @@ background-color: Cornsilk;
 }
 header {
 	background-color: #666;
-	padding: 30px;
+	padding: 10px;
 	text-align: center;
 	font-size: 21px;
 	color: white;
@@ -78,7 +78,8 @@ justify-content: space-between;
 </head>
 <body>
 	<header>
-	<h2>Baker Street Main Page</h2>
+	<h2> <img src="/images/sjulogo.png" alt="my image" width="170" height="170">
+ Baker Street Main Page</h2>
 	</header>
 	<h5 style="font-size:10px; line-height:0.4;" > User logged in: <?php echo htmlspecialchars($username); ?> </h5>
 	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5>
@@ -91,8 +92,8 @@ justify-content: space-between;
 <h5> 4 :   <?php echo htmlspecialchars($golfer_4_name); ?> </h5>
 <h5> 5 :   <?php echo htmlspecialchars($golfer_5_name); ?> </h5>
 
-
-
+<h1>---------------------------- </h1>
+<img src="/images/sjulogo.png" alt="my image" width="200" height="200">
 
 	<nav>
 	   <ul>
