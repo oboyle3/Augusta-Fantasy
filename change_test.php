@@ -16,13 +16,41 @@ require_once('db_connection.php');
 var_dump($_SESSION);
 $user_id = $_SESSION['id'];
 $username = $_SESSION['username'];
+//
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+	if(isset($_POST['golfer_name']) && !empty($_POST['golfer_name'])) {
+		$golfer_name = $_POST['golfer_name'];
+echo $golfer_name;
+//
+$sqlname = "SELECT golfer_id FROM golfers WHERE name = ?";
+$stmtname = $conn->prepare($sqlname);
+    $stmtname-> bind_param("s", $golfer_name);
+    $stmtname->execute();
+    $stmtname->bind_result($golfer_id);
+    $stmtname->fetch();
+    $stmtname->close();
 
+//
+		echo "you selected golfer with ID: " . $golfer_id;
+		$sql1 = "UPDATE selections SET golfer_1 = ? WHERE user_id = ?";
+		if ($stmt2 = $conn->prepare($sql1)) {
+			$stmt2->bind_param("ii", $golfer_id, $user_id);
+			if($stmt2->execute()){
+				echo "golfer slection updated " . $golfer_id;
+			} else {
+				echo "error updating : " . $stmt2->error;
+			}
+			$stmt2->close();
+		} else {
+			echo "please selecta golfer ";
+		}
 
+}
+}
 //
 $sql = "SELECT golfer_id, name FROM golfers";
 $result = $conn->query($sql);
 
-//
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,24 +91,30 @@ font-size: 10px;
 
 <form action="change_test.php" method="POST">
 	<label for "golfer"> choose a golfer</label>
-	<select name="golfer_id" id="golfer">
+	<select name="golfer_name" id="golfer">
 	<option value"">--selects a golfer --</option>
 
 <h1>-------------------------------</h1>
 
-<?php
+//------------------------------------------------------opening php tag
 //display the golfers in the db
-	if($result->num_rows > 0) {
-		while($row = $result->fetch_assoc()) {
-		 echo '<div>';
-	         echo '<span>' . $row["name"] . '</span>';
-		 echo '<option value"' . $row["golfer_id"] . '">' . $row["name"] . '</option>';
-	       	echo '</div>';
-		}//end while
 	
-	}//end ifnumrows
+/////////////////////////////////paste if here
+<?php
+if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                 echo '<div>';
+                 echo '<span>' . $row["name"] . '</span>';
+                 echo '<option value"' . $row["golfer_id"] . '">' . $row["name"] . '</option>';
+                echo '</div>';
+                }//end while
+
+        }//end ifnumrows
 
 ?>
+
+//-------------------------------------------------------ending php tag
+
 </select>
 <button type="submit">select golfer button</button>
 </form>
@@ -109,5 +143,3 @@ font-size: 10px;
 
 </body>
 </html>
-
-
