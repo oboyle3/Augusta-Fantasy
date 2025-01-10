@@ -18,6 +18,9 @@ $user_id = $_SESSION['id'];
 $username = $_SESSION['username'];
 //
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+   if(isset($_POST['action'])) {
+     $action = $_POST['action'];
+      if ($action == "updateGolfer1") {
 	if(isset($_POST['golfer_name']) && !empty($_POST['golfer_name'])) {
 		$golfer_name = $_POST['golfer_name'];
 echo $golfer_name;
@@ -46,10 +49,44 @@ $stmtname = $conn->prepare($sqlname);
 		}
 
 }
-}
+//here else if
+elseif ($action == "updateGolfer2") {
+        if(isset($_POST['golfer_name']) && !empty($_POST['golfer_name'])) {
+                $golfer_name = $_POST['golfer_name'];
+echo $golfer_name;
+//
+$sqlname = "SELECT golfer_id FROM golfers WHERE name = ?";
+$stmtname = $conn->prepare($sqlname);
+    $stmtname-> bind_param("s", $golfer_name);
+    $stmtname->execute();
+    $stmtname->bind_result($golfer_id);
+    $stmtname->fetch();
+    $stmtname->close();
+
+//
+                echo "you selected golfer with ID: " . $golfer_id;
+                $sql1 = "UPDATE selections SET golfer_2 = ? WHERE user_id = ?";
+                if ($stmt2 = $conn->prepare($sql1)) {
+                        $stmt2->bind_param("ii", $golfer_id, $user_id);
+                        if($stmt2->execute()){
+                                echo "golfer slection updated " . $golfer_id;
+                        } else {
+                                echo "error updating : " . $stmt2->error;
+                        }
+                        $stmt2->close();
+                } else {
+                        echo "please selecta golfer ";
+}                }
+//
+}//3
+}//2
+}//1
 //
 $sql = "SELECT golfer_id, name FROM golfers";
 $result = $conn->query($sql);
+
+$sqlgetgolfer2 = "SELECT golfer_id , name FROM golfers";
+$resultgolfer2 = $conn->query($sqlgetgolfer2);
 
 ?>
 <!DOCTYPE html>
@@ -90,16 +127,10 @@ font-size: 10px;
 <h1>-------------------------------</h1>
 
 <form action="change_test.php" method="POST">
-	<label for "golfer"> choose a golfer</label>
+	<label for "golfer"> choose golfer 1</label>
 	<select name="golfer_name" id="golfer">
-	<option value"">--selects a golfer --</option>
-
+	<option value"">--select  golfer here--</option>
 <h1>-------------------------------</h1>
-
-//------------------------------------------------------opening php tag
-//display the golfers in the db
-	
-/////////////////////////////////paste if here
 <?php
 if($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -116,9 +147,35 @@ if($result->num_rows > 0) {
 //-------------------------------------------------------ending php tag
 
 </select>
-<button type="submit">select golfer button</button>
-</form>
+<button type="submit"name="action" value="updateGolfer1">select golfer button</button>
+</form>  ///////here
 <h1>-------------------------------</h1>
+//
+<form action="change_test.php" method="POST">
+        <label for "golfer"> choose golfer 2</label>
+        <select name="golfer_name" id="golfer">
+        <option value"">--select  golfer here--</option>
+<h1>-------------------------------</h1>
+<?php
+if($resultgolfer2->num_rows > 0) {
+                while($row = $resultgolfer2->fetch_assoc()) {
+                 echo '<div>';
+                 echo '<span>' . $row["name"] . '</span>';
+                 echo '<option value"' . $row["golfer_id"] . '">' . $row["name"] . '</option>';
+                echo '</div>';
+                }//end while
+
+        }//end ifnumrows
+
+?>
+
+//-------------------------------------------------------ending php tag
+
+</select>
+<button type="submit" name="action" value="updateGolfer2">select golfer button 2</button>
+</form>
+
+//
 
 
         <nav>
