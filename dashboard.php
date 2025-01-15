@@ -145,6 +145,10 @@ background-color: #f2f2f2;
                 <li> <a href="change_test.php">change test</a></li>
         </ul>
 
+<ul>
+                <li> <a href="usergolferselections.php">user golfer selections php</a></li>
+        </ul>
+
 
         </nav>
         <footer>
@@ -153,11 +157,6 @@ background-color: #f2f2f2;
 
 </body>
 </html>
-
-	</nav>
-	<footer>
-           <p> Standard Irishman 2024</p>
-        </footer>
 
 </body>
 </html>
