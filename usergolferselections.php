@@ -15,6 +15,7 @@ echo "this is the action: " .  $action . "<br>";
 echo "<br><br>";
       if($action == "updateGolfer"){
 $test= $_POST['golfer_name1'];
+echo $test;
 echo "you choose golfer 1 as: " . $test;        
         if(isset($_POST['golfer_name1']) && !empty($_POST['golfer_name1']) && isset($_POST['golfer_name2']) && !empty($_POST['golfer_name2'])) {
 	   $golfer_name1= $_POST['golfer_name1'];
@@ -23,7 +24,7 @@ echo "<br>";
            echo "Golfer 1 selected: " . $golfer_name1 . "<br>";
            echo "Golfer 2 selected: " . $golfer_name2 . "<br>";
           /* $sqlname1 = "SELECT golfer_id FROM golfers WHERE name = ?";*/
-$sqlname1 = "SELECT name FROM golfers WHERE golfer_id = ?";
+$sqlname1 = "SELECT golfer_id FROM golfers WHERE name = ?";
            $stmtname1 = $conn->prepare($sqlname1);
            $stmtname1-> bind_param("s", $golfer_name1);
            $stmtname1->execute();
@@ -31,7 +32,7 @@ $sqlname1 = "SELECT name FROM golfers WHERE golfer_id = ?";
            $stmtname1->bind_result($golfer_id1);
            $stmtname1->fetch();
            $stmtname1->close();
-           $sqlname2 = "SELECT name FROM golfers WHERE golfer_id = ?";
+           $sqlname2 = "SELECT golfer_id FROM golfers WHERE name = ?";
            $stmtname2 = $conn->prepare($sqlname2);
            $stmtname2-> bind_param("s", $golfer_name2);
            $stmtname2->execute();
@@ -40,8 +41,9 @@ $sqlname1 = "SELECT name FROM golfers WHERE golfer_id = ?";
            $stmtname2->close();
            echo "golfer 1 id: " . $golfer_id1 . "<br>";
            echo "golfer 2 id: " . $golfer_id2 . "<br>";
+	echo "user id logged in: " . $user_id . "<br>";
 	   $sql1 = "UPDATE selections SET golfer_1 = ?, golfer_2 = ? WHERE user_id = ?";
-$stmt2 = $conn>prepare($sql1);
+$stmt2 = $conn->prepare($sql1);
 	  /* if(stmt2) {*/
              $stmt2->bind_param("iii", $golfer_id1, $golfer_id2, $user_id);
                if($stmt2->execute()){
@@ -61,18 +63,18 @@ $stmt2 = $conn>prepare($sql1);
 
 
 
-//
-$sqlgetgolfer2 = "SELECT golfer_id , name FROM golfers";
+//add golfer_id here
+
+
+function generateGolferDropdown($conn) {
+$sqlgetgolfer2 = "SELECT  name FROM golfers";
 $resultgolfer2 = $conn->query($sqlgetgolfer2);
-
-
-function generateGolferDropdown($resultgolfer2) {
 
 $output = "";
 
-if($resultgolfer2->num_rows > 0) {
+if($resultgolfer2 &&  $resultgolfer2->num_rows > 0) {
                 while($row = $resultgolfer2->fetch_assoc()) {
-                $output .= '<option value="' . $row["golfer_id"] . '">' . $row["name"] . '</option>';
+                $output .= '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
                 }//end while
 
         }//end ifnumrows
@@ -97,17 +99,17 @@ return $output;
         <label for="golfer1"> choose golfer 1</label>
         <select name="golfer_name1" id="golfer1">
         <option value="">--select  golfer here--</option>
-	<?php echo generateGolferDropdown($resultgolfer2); ?>
+	<?php echo generateGolferDropdown($conn); ?>
         </select>
 	<label for="golfer2"> choose golfer 2</label>
 	<select name="golfer_name2" id="golfer2">
 	<option value="">--select golfer2 here--</option>
-	<option value="2">Shane Lowry</option>
-	<?php echo generateGolferDropdown($resultgolfer2); ?>
+	
+	<?php echo generateGolferDropdown($conn); ?>
 	</select>
 
 <button type="submit"name="action" value="updateGolfer">select golfer button</button>
-</form>  ///////here
+</form>  
 <ul>
                 <li> <a href="dashboard.php">back to dashboard</a></li>
         </ul>
