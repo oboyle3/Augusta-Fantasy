@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 	//prepare the sql statement to insert the user data
 	$sql =("INSERT INTO users (username, password, age, first_name, last_name, hometown, email) VALUES (:username, :password, :age, :firstname, :lastname, :hometown, :email)");
-
+	
 	//prep sql statement
 	$stmt = $conn->prepare($sql);
 	//bind the parameters
@@ -57,6 +57,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	//execute the sql
 	$stmt->execute();
 	$_SESSION["message"] = "sucessfully registered please log in";
+	$user_id = $conn->lastInsertID();
+
+	echo "id:      " . $user_id;
+	$golfer1 = 1;
+	$golfer2 = 2;
+	$golfer3 = 3;
+	$golfer4 = 4;
+	$golfer5 = 5;
+	$sql_selections = "INSERT INTO selections (user_id, golfer_1, golfer_2, golfer_3, golfer_4, golfer_5) VALUES (:user_id, :golfer1, :golfer2, :golfer3, :golfer4, :golfer5)";
+	$stmt_selections = $conn->prepare($sql_selections);
+	$stmt_selections->bindParam(":user_id",$user_id);
+$stmt_selections->bindParam(":golfer1",$golfer1);
+$stmt_selections->bindParam(":golfer2",$golfer2);
+$stmt_selections->bindParam(":golfer3",$golfer3);
+$stmt_selections->bindParam(":golfer4",$golfer4);
+$stmt_selections->bindParam(":golfer5",$golfer5);
+$stmt_selections->execute();
+
+
 	header("Location: index.html");
 	exit();
 

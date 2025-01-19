@@ -67,7 +67,7 @@ $stmt2 = $conn->prepare($sql1);
 
 
 function generateGolferDropdown($conn) {
-$sqlgetgolfer2 = "SELECT  name FROM golfers";
+$sqlgetgolfer2 = "SELECT  name FROM golfers WHERE tier = 1";
 $resultgolfer2 = $conn->query($sqlgetgolfer2);
 
 $output = "";
@@ -80,6 +80,65 @@ if($resultgolfer2 &&  $resultgolfer2->num_rows > 0) {
         }//end ifnumrows
 return $output;
 }//end functon
+//the below is for tier 2 guys
+function generateGolferDropdown2($conn) {
+	$tier2selections = "SELECT name FROM golfers WHERE tier = 2";
+	$resultgolfer3 = $conn->query($tier2selections);
+	$output = "";
+
+if($resultgolfer3 &&  $resultgolfer3->num_rows > 0) {
+                while($row = $resultgolfer3->fetch_assoc()) {
+                $output .= '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                }//end while
+
+        }//end ifnumrows
+return $output;
+}//end functon
+//
+//the below id for tier 3 guys
+function generateGolferDropdown3($conn) {
+        $tier3selections = "SELECT name FROM golfers WHERE tier = 3";
+        $resultgolfer4 = $conn->query($tier3selections);
+        $output = "";
+
+if($resultgolfer4 &&  $resultgolfer4->num_rows > 0) {
+                while($row = $resultgolfer4->fetch_assoc()) {
+                $output .= '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                }//end while
+
+        }//end ifnumrows
+return $output;
+}//end functon
+//the below is for tier 4 guys
+function generateGolferDropdown4($conn) {
+        $tier4selections = "SELECT name FROM golfers WHERE tier = 4";
+        $resultgolfer5 = $conn->query($tier4selections);
+        $output = "";
+
+if($resultgolfer5 &&  $resultgolfer5->num_rows > 0) {
+                while($row = $resultgolfer5->fetch_assoc()) {
+                $output .= '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                }//end while
+
+        }//end ifnumrows
+return $output;
+}//end functon
+//the below is for tier 5 guys
+function generateGolferDropdown5($conn) {
+        $tier5selections = "SELECT name FROM golfers WHERE tier = 5";
+        $resultgolfer6 = $conn->query($tier5selections);
+        $output = "";
+
+if($resultgolfer6 &&  $resultgolfer6->num_rows > 0) {
+                while($row = $resultgolfer6->fetch_assoc()) {
+                $output .= '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                }//end while
+
+        }//end ifnumrows
+return $output;
+}//end functon
+
+//
 ?>
 
 	
@@ -98,15 +157,35 @@ return $output;
 <form action="usergolferselections.php" method="POST">
         <label for="golfer1"> choose golfer 1</label>
         <select name="golfer_name1" id="golfer1">
-        <option value="">--select  golfer here--</option>
+        <option value="">--select a Tier 1 golfer here--</option>
 	<?php echo generateGolferDropdown($conn); ?>
-        </select>
+        </select><br>
 	<label for="golfer2"> choose golfer 2</label>
 	<select name="golfer_name2" id="golfer2">
-	<option value="">--select golfer2 here--</option>
-	
-	<?php echo generateGolferDropdown($conn); ?>
-	</select>
+	<option value="">--select a Tier 2 golfer  here--</option>
+	<?php echo generateGolferDropdown2($conn); ?>
+	</select><br>
+</select>
+        <label for="golfer3"> choose golfer 3</label>
+        <select name="golfer_name3" id="golfer3">
+        <option value="">--select a Tier 3 golfer  here--</option>
+        <?php echo generateGolferDropdown3($conn); ?>
+        </select><br>
+</select>
+        <label for="golfer4"> choose golfer 4</label>
+        <select name="golfer_name4" id="golfer4">
+        <option value="">--select a Tier 4 golfer here--</option>
+        <?php echo generateGolferDropdown4($conn); ?>
+        </select><br>
+</select>
+        <label for="golfer5"> choose golfer 5</label>
+        <select name="golfer_name5" id="golfer5">
+        <option value="">--select a tier 5 golfer here--</option>
+        <?php echo generateGolferDropdown5($conn); ?>
+        </select><br>
+
+
+
 
 <button type="submit"name="action" value="updateGolfer">select golfer button</button>
 </form>  

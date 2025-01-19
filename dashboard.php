@@ -18,14 +18,22 @@ $user_id = $_SESSION['id'];
 $username = $_SESSION['username'];
 //echo "user id in the database" .  $user_id;
 //start query for user selections
-$golfer_query = "SELECT g1.name AS golfer_1_name, g2.name AS golfer_2_name, g3.name AS golfer_3_name, g4.name AS golfer_4_name, g5.name AS golfer_5_name FROM selections ugs LEFT JOIN golfers g1 ON ugs.golfer_1 = g1.golfer_id LEFT JOIN golfers g2 ON ugs.golfer_2 = g2.golfer_id LEFT JOIN golfers g3 ON ugs.golfer_3 = g3.golfer_id LEFT JOIN golfers g4 ON ugs.golfer_4 = g4.golfer_id LEFT JOIN golfers g5 ON ugs.golfer_5 = g5.golfer_id WHERE ugs.user_id = ?";
+//$golfer_query = "SELECT g1.name AS golfer_1_name,g1.day1score AS golfer_1_day1score,g1.day2score AS golfer_2_day2score,g1.day3score AS golfer_3_day3score, g2.name AS golfer_2_name, g2.day1score AS golfer_2_day1score , g3.name AS golfer_3_name,/**/g3.day1score AS golfer_3_day1score, /**/ g4.name AS golfer_4_name,g4.day1score AS golfer_4_day1score, /**/ /**/ g5.name AS golfer_5_name /**/,g5.day1score AS golfer_5_day1score FROM selections ugs LEFT JOIN golfers g1 ON ugs.golfer_1 = g1.golfer_id LEFT JOIN golfers g2 ON ugs.golfer_2 = g2.golfer_id LEFT JOIN golfers g3 ON ugs.golfer_3 = g3.golfer_id LEFT JOIN golfers g4 ON ugs.golfer_4 = g4.golfer_id LEFT JOIN golfers g5 ON ugs.golfer_5 = g5.golfer_id WHERE ugs.user_id = ?";
+$golfer_query = "SELECT g1.name AS golfer_1_name, g1.day1score AS golfer_1_day1score, g1.day2score AS golfer_1_day2score, g1.day3score AS golfer_1_day3score, g1.day4score AS golfer_1_day4score, g2.name AS golfer_2_name, g2.day1score AS golfer_2_day1score, g2.day2score AS golfer_2_day2score, g2.day3score AS golfer_2_day3score, g2.day4score AS golfer_2_day4score, g3.name AS golfer_3_name, g3.day1score AS golfer_3_day1score, g3.day2score AS golfer_3_day2score, g3.day3score AS golfer_3_day3score, g3.day4score AS golfer_3_day4score,  g4.name AS golfer_4_name, g4.day1score AS golfer_4_day1score, g4.day2score AS golfer_4_day2score, g4.day3score AS golfer_4_day3score, g4.day4score AS golfer_4_day4score, g5.name AS golfer_5_name, g5.day1score AS golfer_5_day1score, g5.day2score AS golfer_5_day2score, g5.day3score AS golfer_5_day3score, g5.day4score AS golfer_5_day4score FROM selections ugs LEFT JOIN golfers g1 ON ugs.golfer_1 = g1.golfer_id LEFT JOIN golfers g2 ON ugs.golfer_2 = g2.golfer_id LEFT JOIN golfers g3 ON ugs.golfer_3 = g3.golfer_id LEFT JOIN golfers g4 ON ugs.golfer_4 = g4.golfer_id LEFT JOIN golfers g5 ON ugs.golfer_5 = g5.golfer_id WHERE ugs.user_id = ?";
 $golfer_stmt =  $conn->prepare($golfer_query);
-$golfer_stmt-> bind_param('i',$user_id);
+$golfer_stmt->bind_param('i',$user_id);
 $golfer_stmt->execute();
-$golfer_stmt->bind_result($golfer_1_name,$golfer_2_name,$golfer_3_name,$golfer_4_name,$golfer_5_name);
+//$golfer_stmt->bind_result($golfer_1_name, $golfer_1_day1score,$golfer_1_day2score,$golfer_1_day3score, $golfer_2_name,$golfer_2_day1score,$golfer_3_name, $golfer_3_day1score,$golfer_4_name,$golfer_4_day1score,$golfer_5_name,$golfer_5_day1score);
+$golfer_stmt->bind_result(
+    $golfer_1_name, $golfer_1_day1score, $golfer_1_day2score, $golfer_1_day3score, $golfer_1_day4score,
+    $golfer_2_name, $golfer_2_day1score, $golfer_2_day2score, $golfer_2_day3score, $golfer_2_day4score,
+    $golfer_3_name, $golfer_3_day1score, $golfer_3_day2score, $golfer_3_day3score, $golfer_3_day4score,
+    $golfer_4_name, $golfer_4_day1score, $golfer_4_day2score, $golfer_4_day3score, $golfer_4_day4score,
+    $golfer_5_name, $golfer_5_day1score, $golfer_5_day2score, $golfer_5_day3score, $golfer_5_day4score
+);
 $golfer_stmt->fetch();
 $golfer_stmt->close();
-
+echo "hello world";
 
 
 
@@ -97,57 +105,74 @@ background-color: #f2f2f2;
 	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5>
 	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
 	<h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5>
+	<h5 style="font-size:10px; line-height:0.4;" > your selected golfers % over par: [some number here] </h5>
 <table style ="width:50%">
 	<tr>
 	   <th>your selected golfer</th>
            <th>names</th>
+	   <th>Day 1 Score</th>
+<th>Day 2 Score</th>
+<th>Day 3 Score</th>
+<th>Day 4 Score</th>
 	</tr>
 	<tr>
            <td> 1</td>
 	   <td><?php echo htmlspecialchars($golfer_1_name); ?> </td>
+	   <td><?php echo htmlspecialchars($golfer_1_day1score); ?> </td>
+	   <td><?php echo htmlspecialchars($golfer_1_day2score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_1_day3score); ?></td>
+	   <td><?php echo htmlspecialchars($golfer_1_day4score); ?><td>
+
 	</tr>
 	<tr>
            <td> 2</td>
            <td><?php echo htmlspecialchars($golfer_2_name); ?> </td>
+	   <td><?php echo htmlspecialchars($golfer_2_day1score); ?> </td>
+           <td><?php echo htmlspecialchars($golfer_2_day2score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_2_day3score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_2_day4score); ?><td>
         </tr>
 	<tr>
            <td>3 </td>
            <td><?php echo htmlspecialchars($golfer_3_name); ?> </td>
+	   <td><?php echo htmlspecialchars($golfer_3_day1score); ?> </td>
+            <td><?php echo htmlspecialchars($golfer_3_day2score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_3_day3score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_3_day4score); ?><td>
         </tr>
 	<tr>
            <td>4 </td>
            <td><?php echo htmlspecialchars($golfer_4_name); ?> </td>
+           <td><?php echo htmlspecialchars($golfer_4_day1score); ?> </td>
+	   <td><?php echo htmlspecialchars($golfer_4_day2score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_4_day3score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_4_day4score); ?><td>
         </tr>
 	<tr>
            <td>5 </td>
            <td><?php echo htmlspecialchars($golfer_5_name); ?> </td>
+       	<td><?php echo htmlspecialchars($golfer_5_day1score); ?> </td>
+           <td><?php echo htmlspecialchars($golfer_5_day2score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_5_day3score); ?></td>
+           <td><?php echo htmlspecialchars($golfer_5_day4score); ?><td>
+
         </tr>
 
 
 
 </table>
-
-
 	<nav>
-	   <ul>
-		<li> <a href="index.html">Logout</a></li>
-	   </ul>
-	<ul>
-		<li> <a href="golferselection.php">Select Golfers / Change Selections</a></li>
-	</ul>
 	<ul>
                 <li> <a href="update_info.php">User profile settings</a></li>
         </ul>
-
 </table>
-
 <ul>
-                <li> <a href="change_test.php">change test</a></li>
+                <li> <a href="usergolferselections.php">Change My Golfers</a></li>
         </ul>
-
 <ul>
-                <li> <a href="usergolferselections.php">user golfer selections php</a></li>
-        </ul>
+                <li> <a href="index.html">Logout</a></li>
+           </ul>
+
 
 
         </nav>
