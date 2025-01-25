@@ -148,10 +148,76 @@ return $output;
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+background-color: Cornsilk;
+}
+header {
+        background-color: #666;
+        padding: 10px;
+        text-align: center;
+        font-size: 21px;
+        color: white;
+}
+footer {
+                   text-align: center;
+                   padding: 20px;
+                   background-color: LightGray;
+                }
+table {
+margin:20px 0;
+border-collapse: collapse;
+font-family: Arial, sans-serif;
+}
+th {
+background-color: #4CAF50;
+color: white;
+padding: 1px;
+}
+td {
+border: 1px solid #ddd;
+text-align: center;
+}
+tr:hover {
+background-color: #f2f2f2;
+}
+h2 {
+font-size: 30px;
+}
+table {
+margin-left: auto;
+margin-right: auto;
+}
+.button-container {
+text-align: center;
+}
+.button {
+display: incline-block;
+padding: 5px 10px;
+margin: 9px;
+background-color: #4CAF50;
+color: white;
+text-decoration: none;
+border-radius: 5px;
+font-size: 13px;
+transition: background-color 0.3s;
+}
+.button:hover {
+background-color: #45a049;
+}
+
+</style>
 <title>dashboard</title>
 </head>
 <body>
-<h1>==</h1>
+<header>
+        <h2> <img src="/images/sjulogo.png" alt="my image" width="145" height="145"> Baker Street Golf</h2>
+        <div class="button-container">
+          <a href="update_info.php" class="button">Update My Info</a>
+          <a href="dashboard.php" class="button">Back To Main Page</a>
+          <a href="index.html" class="button">Logout</a>
+        </div>
+        </header>
 
 
 <form action="usergolferselections.php" method="POST">
@@ -193,6 +259,9 @@ return $output;
                 <li> <a href="dashboard.php">back to dashboard</a></li>
         </ul>
 
+<footer>
+           <p> Standard Irishman 2024 &trade;</p>
+        </footer>
 
 
 </body>

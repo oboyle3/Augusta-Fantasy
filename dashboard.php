@@ -125,22 +125,46 @@ tr:hover {
 background-color: #f2f2f2;
 }
 h2 {
-font-size: 10px;
+font-size: 30px;
+}
+table {
+margin-left: auto;
+margin-right: auto;
+}
+.button-container {
+text-align: center;
+}
+.button {
+display: incline-block;
+padding: 5px 10px;
+margin: 9px;
+background-color: #4CAF50;
+color: white;
+text-decoration: none;
+border-radius: 5px;
+font-size: 13px;
+transition: background-color 0.3s;
+}
+.button:hover {
+background-color: #45a049;
 }
 </style>
 </head>
 <body>
 	<header>
-	<h2> <img src="/images/sjulogo.png" alt="my image" width="170" height="170">
- Baker Street Main Page</h2>
-
+	<h2> <img src="/images/sjulogo.png" alt="my image" width="145" height="145"> Baker Street Golf</h2>
+	<div class="button-container">
+	  <a href="update_info.php" class="button">Update My Info</a>
+	  <a href="usergolferselections.php" class="button">Change My Golfers</a>
+	  <a href="index.html" class="button">Logout</a>
+	</div>
 	</header>
-	<h5 style="font-size:10px; line-height:0.4;" > User logged in: <?php echo htmlspecialchars($username); ?> </h5>
+	<h5 style="font-size:10px; text-align: center" > User logged in: <?php echo htmlspecialchars($username); ?>  ||  Your chosen golfers average: <?php echo htmlspecialchars($overall_avg_score); ?> </h5>
 <!--	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5> -->
 <!--	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5> -->
 	<!-- <h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5> -->
-	<h5> your picked golfers average: <?php echo htmlspecialchars($overall_avg_score);?> </h5>
-<table style ="width:50%">
+	
+<table style ="width:50%" margin-left: auto; margin-right: auto;>
 	<tr>
 	   <th>your selected golfer</th>
            <th>names</th>
@@ -216,7 +240,7 @@ $resultleader = $conn->query($sqlleader);
 
 if ($resultleader->num_rows > 0) {
     // Output the top 3 leaderboard
-    echo "<h2>Top 3 Players</h2>";
+    echo '<h2 style="text-align: center; font-size: 14px">Leaderboard</h2>';
     echo "<table border='1'><tr><th>Username</th><th>Total Score</th></tr>";
     while ($row = $resultleader->fetch_assoc()) {
         echo "<tr><td>" . $row['username'] . "</td><td>" . $row['avg_score'] . "</td></tr>";
@@ -230,22 +254,12 @@ if ($resultleader->num_rows > 0) {
 
 ?>
 	<nav>
-	<ul>
-                <li> <a href="update_info.php">User profile settings</a></li>
-        </ul>
+	
 </table>
-<ul>
-                <li> <a href="usergolferselections.php">Change My Golfers</a></li>
-        </ul>
-<ul>
-                <li> <a href="index.html">Logout</a></li>
-           </ul>
-
-
 
         </nav>
         <footer>
-           <p> Standard Irishman 2024</p>
+           <p> Standard Irishman 2024 &trade;</p>
         </footer>
 
 </body>
