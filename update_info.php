@@ -45,6 +45,43 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }//end if
 
 //end update
+
+
+
+// Query to get the top 3 users with their golfers' avg_scores
+$sqlleader = "
+    SELECT u.username,
+	(COALESCE(g1.avg_score, 0) + COALESCE(g2.avg_score, 0) + COALESCE(g3.avg_score, 0) + COALESCE(g4.avg_score, 0) + COALESCE(g5.avg_score, 0)) / 5 AS avg_score           
+    FROM users u
+    INNER JOIN selections s ON u.id = s.user_id
+    LEFT JOIN golfers g1 ON s.golfer_1 = g1.golfer_id
+    LEFT JOIN golfers g2 ON s.golfer_2 = g2.golfer_id
+    LEFT JOIN golfers g3 ON s.golfer_3 = g3.golfer_id
+    LEFT JOIN golfers g4 ON s.golfer_4 = g4.golfer_id
+    LEFT JOIN golfers g5 ON s.golfer_5 = g5.golfer_id
+    ORDER BY avg_score DESC
+    LIMIT 3
+";
+
+$resultleader = $conn->query($sqlleader);
+
+//if ($resultleader->num_rows > 0) {
+    // Output the top 3 leaderboard
+  //  echo "<h2>Top 3 Players</h2>";
+   // echo "<table border='1'><tr><th>Username</th><th>Total Score</th></tr>";
+   // while ($row = $resultleader->fetch_assoc()) {
+    //    echo "<tr><td>" . $row['username'] . "</td><td>" . $row['avg_score'] . "</td></tr>";
+   // }
+   // echo "</table>";
+//} else {
+  //  echo "No leaderboard data found.";
+//}
+
+
+
+
+
+
 ?>
 
 //html

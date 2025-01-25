@@ -33,9 +33,36 @@ $golfer_stmt->bind_result(
 );
 $golfer_stmt->fetch();
 $golfer_stmt->close();
-echo "hello world";
-
-
+//echo "hello world" . $golfer_1_dayscore;
+//array to hold average scores for golfers
+$avg_scores = [];
+//array of golfer names
+$golfer_names = [$golfer_1_name, $golfer_2_name, $golfer_3_name, $golfer_4_name, $golfer_5_name];
+//loop through each golfers name to get there avg_score
+foreach ($golfer_names as $golfer_name) {
+	$sqlforarray = "SELECT avg_score FROM golfers WHERE name = ?";
+	if ($stmtforarray = $conn->prepare($sqlforarray)) {
+		$stmtforarray->bind_param('s', $golfer_name);
+		$stmtforarray->execute();
+		$stmtforarray->bind_result($avg_score);
+		if($stmtforarray->fetch()){
+			$avg_scores[] = $avg_score;
+		} else {
+			echo "no average found in this golfer: $golfer_name<br>";
+		}
+		$stmtforarray->close();
+		} else {
+			echo "error prepping the query";
+		}
+	}
+	if(count($avg_scores) === 5){
+		$total_avg_score = array_sum($avg_scores);
+		$overall_avg_score = $total_avg_score / count($avg_scores);
+		echo "the average score " . $overall_avg_score;
+	} else {
+		echo "error";
+	}
+	
 
 
 //$golfer_result = $golfer_stmt->get_result();
@@ -54,6 +81,9 @@ else {
 $age = "age not found";
 }
 // $conn->close();
+//golfer_1_average_score = ($golfer_1_day1score + $golfer_1_day2score + $golfer_1_day3score + $golfer_1_day4score ) / 4;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,18 +124,22 @@ text-align: center;
 tr:hover {
 background-color: #f2f2f2;
 }
+h2 {
+font-size: 10px;
+}
 </style>
 </head>
 <body>
 	<header>
 	<h2> <img src="/images/sjulogo.png" alt="my image" width="170" height="170">
  Baker Street Main Page</h2>
+
 	</header>
 	<h5 style="font-size:10px; line-height:0.4;" > User logged in: <?php echo htmlspecialchars($username); ?> </h5>
-	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5>
-	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5>
-	<h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5>
-	<h5 style="font-size:10px; line-height:0.4;" > your selected golfers % over par: [some number here] </h5>
+<!--	<h5 style="font-size:10px; line-height:0.4;" > your age:  <?php echo htmlspecialchars($age); ?> </h5> -->
+<!--	<h5 style="font-size:10px; line-height:0.4;"> your hometown:  <?php echo htmlspecialchars($hometown); ?> </h5> -->
+	<!-- <h5 style="font-size:10px; line-height:0.4;" > your email:  <?php echo htmlspecialchars($email); ?> </h5> -->
+	<h5> your picked golfers average: <?php echo htmlspecialchars($overall_avg_score);?> </h5>
 <table style ="width:50%">
 	<tr>
 	   <th>your selected golfer</th>
@@ -161,6 +195,40 @@ background-color: #f2f2f2;
 
 
 </table>
+<?php
+$sqlleader = "
+    SELECT u.username,
+        (COALESCE(g1.avg_score, 0) + COALESCE(g2.avg_score, 0) + COALESCE(g3.avg_score, 0) + COALESCE(g4.avg_score, 0) + COALESCE(g5.avg_score, 0)) / 5 AS avg_score 
+
+    FROM users u
+    INNER JOIN selections s ON u.id = s.user_id
+    LEFT JOIN golfers g1 ON s.golfer_1 = g1.golfer_id
+    LEFT JOIN golfers g2 ON s.golfer_2 = g2.golfer_id
+    LEFT JOIN golfers g3 ON s.golfer_3 = g3.golfer_id
+    LEFT JOIN golfers g4 ON s.golfer_4 = g4.golfer_id
+    LEFT JOIN golfers g5 ON s.golfer_5 = g5.golfer_id
+    ORDER BY avg_score DESC
+    LIMIT 3
+";
+
+$resultleader = $conn->query($sqlleader);
+
+
+if ($resultleader->num_rows > 0) {
+    // Output the top 3 leaderboard
+    echo "<h2>Top 3 Players</h2>";
+    echo "<table border='1'><tr><th>Username</th><th>Total Score</th></tr>";
+    while ($row = $resultleader->fetch_assoc()) {
+        echo "<tr><td>" . $row['username'] . "</td><td>" . $row['avg_score'] . "</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No leaderboard data found.";
+}
+
+
+
+?>
 	<nav>
 	<ul>
                 <li> <a href="update_info.php">User profile settings</a></li>
