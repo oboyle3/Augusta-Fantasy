@@ -78,7 +78,14 @@ $resultleader = $conn->query($sqlleader);
 //}
 
 
-
+if(isset($_POST['update_avg_score'])){
+	$sql3 = "UPDATE golfers SET avg_score = (IFNULL(day1score, 72) + IFNULL(day2score, 72) + IFNULL(day3score, 72) + IFNULL(day4score, 72)) / 4;";
+	if ($conn->query($sql) === TRUE) {
+		echo "database refreshed";
+	} else {
+		echo "could not update the db";
+	}
+}
 
 
 
@@ -120,6 +127,10 @@ header {
 	<label for="email">new email:</label>
 	<input type="email" name="email" value="enter email here">
 	<button type="submit">update email</button>
+</form>
+
+<form method="POST" action="">
+	<button type="submit" name="update_avg_score"> Database refresh</button>
 </form>
 <nav>
            <ul>
