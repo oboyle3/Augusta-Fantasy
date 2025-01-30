@@ -83,6 +83,16 @@ $age = "age not found";
 // $conn->close();
 //golfer_1_average_score = ($golfer_1_day1score + $golfer_1_day2score + $golfer_1_day3score + $golfer_1_day4score ) / 4;
 
+if(isset($_POST['update_avg_score'])){
+        $sql3 = "UPDATE golfers SET avg_score = (IFNULL(day1score, 72) + IFNULL(day2score, 72) + IFNULL(day3score, 72) + IFNULL(day4score, 72)) / 4;";
+        if ($conn->query($sql3) === TRUE) {
+                echo "database refreshed";
+        } else {
+                echo "could not update the db";
+        }
+}
+
+
 
 ?>
 
@@ -231,7 +241,7 @@ $sqlleader = "
     LEFT JOIN golfers g3 ON s.golfer_3 = g3.golfer_id
     LEFT JOIN golfers g4 ON s.golfer_4 = g4.golfer_id
     LEFT JOIN golfers g5 ON s.golfer_5 = g5.golfer_id
-    ORDER BY avg_score DESC
+    ORDER BY avg_score ASC
     LIMIT 3
 ";
 
@@ -254,6 +264,13 @@ if ($resultleader->num_rows > 0) {
 
 ?>
 	<nav>
+
+
+</form>
+
+<form method="POST" action="">
+        <button type="submit" name="update_avg_score"> Database refresh</button>
+</form>
 	
 </table>
 
